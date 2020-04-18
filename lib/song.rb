@@ -3,7 +3,7 @@ class Song
   @@all = []
 
   def self.all
-    @@all
+    @@all.uniq
   end
 
   def save
@@ -23,12 +23,24 @@ class Song
     song
   end
   
+  def self.create_by_name(name)
+    song = self.new
+    song.name = name
+    @@all << song
+    song
+  end
+  
+  
   def self.find_by_name(string_name)
     self.all.detect {|instance| instance.name == string_name}
   end
   
-  def self.find_or_create_by_name
-    
+  def self.find_or_create_by_name(string_name)
+    if self.find_by_name(string_name) 
+      return self.find_by_name(string_name) 
+    else 
+     self.create_by_name(string_name) 
+    end
   end
   
   def self.alphabetical
@@ -44,7 +56,7 @@ class Song
   end
   
   def self.destroy_all
-    
+    @@all.clear
   end
   
 end
