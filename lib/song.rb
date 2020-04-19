@@ -12,7 +12,7 @@ class Song
 
   def self.create
    song = self.new 
-   song.save
+   @@all << song
    song
   end
   
@@ -25,8 +25,8 @@ class Song
   
   def self.create_by_name(name)
     song = self.new
-    song.name = name
-    @@all << song
+    song.name = name 
+    @@all << song 
     song
   end
   
@@ -47,12 +47,18 @@ class Song
     @@all.sort_by! { |letter| letter.name}
   end
   
-  def self.new_from_filename
-    
+  def self.new_from_filename(file_name)
+      song = self.new 
+      song.name = file_name.split(" - ")[1].split(".")[0]
+      song.artist_name = file_name.split(" - ")[0]
+      song
   end
   
-  def self.create_from_file_name
-    
+  def self.create_from_filename(file_name)
+      song = self.new 
+      song.name = file_name.split(" - ")[1].split(".")[0]
+      song.artist_name = file_name.split(" - ")[0]
+      @@all << song 
   end
   
   def self.destroy_all
